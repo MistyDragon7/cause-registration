@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register for the Cause</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        input, label, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <form id="registration-form">
+        <h2 style="text-align: center;">Support the Cause</h2>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="number" name="age" placeholder="Age" required>
+        <input type="text" name="phno" placeholder="Phone Number (e.g. +1234567890)" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <label><input type="checkbox" name="support"> I support this cause</label>
+        <button type="button" onclick="sendOTP()">Send OTP</button>
+        <input type="text" id="otp" placeholder="Enter OTP">
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        function sendOTP() {
+            const form = document.forms['registration-form'];
+            const phno = form.phno.value;
+            fetch('/send_otp/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ phno })
+            }).then(res => res.json()).then(data => alert(data.status));
+        }
+
+        function submitForm() {
+            const form = document.forms['registration-form'];
+            const data = {
+                name: form.name.value,
+                age: form.age.value,
+                phno: form.phno.value,
+                email: form.email.value,
+                support: form.support.checked,
+                otp: document.getElementById('otp').value
+            };
+
+            fetch('/verify/', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            }).then(res => res.json()).then(data => alert(data.status));
+        }
+    </script>
+</body>
+</html>
