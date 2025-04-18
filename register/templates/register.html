@@ -161,6 +161,13 @@
                 display: none;
             }
 
+            .age-error {
+                font-size: 13px;
+                color: #e74c3c;
+                margin-top: 5px;
+                display: none;
+            }
+
             @media (max-width: 480px) {
                 form {
                     width: 100%;
@@ -180,6 +187,9 @@
 
             <div class="input-group">
                 <input type="number" name="age" placeholder="Age" required />
+                <div id="age-error" class="age-error">
+                    You must be at least 13 years old to register.
+                </div>
             </div>
 
             <div class="input-group">
@@ -236,8 +246,10 @@
         <script>
             const phoneInput = document.querySelector("#phno");
             const emailInput = document.querySelector("#email");
+            const ageInput = document.querySelector("input[name='age']");
             const phoneError = document.getElementById("phone-error");
             const emailError = document.getElementById("email-error");
+            const ageError = document.getElementById("age-error");
             const feedbackDiv = document.getElementById("feedback");
             const submitButton = document.getElementById("submit-button");
 
@@ -248,21 +260,33 @@
                     "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
             });
 
-            // Recheck phone number validity when switching regions
-            iti.setCountry("IN"); // initial setup
+            // Event listener for phone number input change
             phoneInput.addEventListener("input", () => {
                 const valid = iti.isValidNumber();
                 phoneError.style.display =
                     valid || !phoneInput.value ? "none" : "block";
             });
 
-            // Event listener for country change to validate phone number after region change
-            iti.getSelectedCountryData().iso2 &&
-                phoneInput.addEventListener("countrychange", () => {
-                    const valid = iti.isValidNumber();
-                    phoneError.style.display =
-                        valid || !phoneInput.value ? "none" : "block";
-                });
+            // Event listener for country change
+            iti.setCountry("IN"); // Ensuring the initial country selection is India
+
+            phoneInput.addEventListener("countrychange", function () {
+                const valid = iti.isValidNumber();
+                phoneError.style.display =
+                    valid || !phoneInput.value ? "none" : "block";
+            });
+
+            // Check age on input
+            ageInput.addEventListener("input", () => {
+                const age = parseInt(ageInput.value);
+                if (isNaN(age) || age < 13) {
+                    ageError.style.display = "block";
+                    submitButton.disabled = true; // Disable submit until age is valid
+                } else {
+                    ageError.style.display = "none";
+                    submitButton.disabled = false;
+                }
+            });
 
             emailInput.addEventListener("input", () => {
                 const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
