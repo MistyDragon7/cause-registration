@@ -1,7 +1,16 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Register for the Cause</title>
+
+        <!-- intl-tel-input CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.min.css"
+        />
+
         <style>
             body {
                 font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -20,11 +29,18 @@
                 border-radius: 20px;
                 box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
                 width: 380px;
-                transition: transform 0.3s ease;
+                animation: slideIn 0.5s ease forwards;
             }
 
-            form:hover {
-                transform: translateY(-5px);
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
 
             h2 {
@@ -35,7 +51,7 @@
                 position: relative;
             }
 
-            h2:after {
+            h2::after {
                 content: "";
                 display: block;
                 width: 50px;
@@ -45,12 +61,17 @@
                 border-radius: 2px;
             }
 
+            .input-group {
+                position: relative;
+                margin-bottom: 20px;
+            }
+
             input[type="text"],
             input[type="number"],
-            input[type="email"] {
+            input[type="email"],
+            input[type="tel"] {
                 width: 100%;
                 padding: 14px;
-                margin-bottom: 5px;
                 border: 2px solid #e0e0e0;
                 border-radius: 10px;
                 font-size: 15px;
@@ -58,19 +79,10 @@
                 box-sizing: border-box;
             }
 
-            input[type="text"]:focus,
-            input[type="number"]:focus,
-            input[type="email"]:focus {
+            input:focus {
                 border-color: #764ba2;
                 box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
                 outline: none;
-            }
-
-            .error-msg {
-                font-size: 13px;
-                color: #c0392b;
-                margin-bottom: 15px;
-                display: none;
             }
 
             label {
@@ -80,7 +92,6 @@
                 color: #2c3e50;
                 font-size: 15px;
                 cursor: pointer;
-                user-select: none;
             }
 
             input[type="checkbox"] {
@@ -99,14 +110,11 @@
                 font-weight: 600;
                 cursor: pointer;
                 transition: all 0.3s ease;
-                position: relative;
-                overflow: hidden;
             }
 
             button:first-of-type {
                 background: #667eea;
                 color: white;
-                margin-top: 10px;
                 margin-bottom: 15px;
             }
 
@@ -118,48 +126,11 @@
             button:disabled {
                 background: #cccccc;
                 cursor: not-allowed;
-                transform: none;
             }
 
             button:not(:disabled):hover {
                 transform: translateY(-2px);
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            }
-
-            #otp {
-                margin-bottom: 20px;
-            }
-
-            .input-group {
-                position: relative;
-                margin-bottom: 20px;
-            }
-
-            .input-group input {
-                margin-bottom: 0;
-            }
-
-            .focus-border {
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                width: 0;
-                height: 2px;
-                background-color: #764ba2;
-                transition: 0.4s;
-                transform: translateX(-50%);
-            }
-
-            .input-group input:focus + .focus-border {
-                width: 100%;
-                transition: 0.4s;
-            }
-
-            @media (max-width: 480px) {
-                form {
-                    width: 100%;
-                    padding: 25px;
-                }
             }
 
             .message {
@@ -182,6 +153,27 @@
                 color: #721c24;
                 border: 1px solid #f5c6cb;
             }
+
+            .error-msg {
+                font-size: 13px;
+                color: #e74c3c;
+                margin-top: 5px;
+                display: none;
+            }
+
+            .age-error {
+                font-size: 13px;
+                color: #e74c3c;
+                margin-top: 5px;
+                display: none;
+            }
+
+            @media (max-width: 480px) {
+                form {
+                    width: 100%;
+                    padding: 25px;
+                }
+            }
         </style>
     </head>
 
@@ -191,26 +183,26 @@
 
             <div class="input-group">
                 <input type="text" name="name" placeholder="Name" required />
-                <span class="focus-border"></span>
             </div>
 
             <div class="input-group">
                 <input type="number" name="age" placeholder="Age" required />
-                <span class="focus-border"></span>
+                <div id="age-error" class="age-error">
+                    You must be at least 13 years old to register.
+                </div>
             </div>
 
             <div class="input-group">
                 <input
-                    type="text"
-                    name="phno"
                     id="phno"
-                    placeholder="Phone Number (e.g. +91xxxxxxxxxx)"
+                    name="phno"
+                    type="tel"
+                    placeholder="Phone Number"
                     required
                 />
                 <div id="phone-error" class="error-msg">
-                    Phone must start with +91 and have 10 digits.
+                    Invalid phone number
                 </div>
-                <span class="focus-border"></span>
             </div>
 
             <div class="input-group">
@@ -222,9 +214,8 @@
                     required
                 />
                 <div id="email-error" class="error-msg">
-                    Please enter a valid email address.
+                    Invalid email address
                 </div>
-                <span class="focus-border"></span>
             </div>
 
             <label>
@@ -232,14 +223,13 @@
                 I support this cause
             </label>
 
-            <div id="feedback"></div>
-
             <button type="button" onclick="sendOTP()">Send OTP</button>
 
             <div class="input-group">
                 <input type="text" id="otp" placeholder="Enter OTP" />
-                <span class="focus-border"></span>
             </div>
+
+            <div id="feedback"></div>
 
             <button
                 type="button"
@@ -251,60 +241,84 @@
             </button>
         </form>
 
+        <!-- intl-tel-input JS -->
+        <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
         <script>
-            const phoneInput = document.getElementById("phno");
-            const emailInput = document.getElementById("email");
+            const phoneInput = document.querySelector("#phno");
+            const emailInput = document.querySelector("#email");
+            const ageInput = document.querySelector("input[name='age']");
             const phoneError = document.getElementById("phone-error");
             const emailError = document.getElementById("email-error");
+            const ageError = document.getElementById("age-error");
+            const feedbackDiv = document.getElementById("feedback");
+            const submitButton = document.getElementById("submit-button");
 
+            const iti = window.intlTelInput(phoneInput, {
+                initialCountry: "IN",
+                separateDialCode: true,
+                utilsScript:
+                    "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js",
+            });
+
+            // Event listener for phone number input change
             phoneInput.addEventListener("input", () => {
-                const value = phoneInput.value.trim();
-                if (!/^\+91\d{10}$/.test(value)) {
-                    phoneError.style.display = "block";
+                const valid = iti.isValidNumber();
+                phoneError.style.display =
+                    valid || !phoneInput.value ? "none" : "block";
+            });
+
+            // Event listener for country change
+            iti.setCountry("IN"); // Ensuring the initial country selection is India
+
+            phoneInput.addEventListener("countrychange", function () {
+                const valid = iti.isValidNumber();
+                phoneError.style.display =
+                    valid || !phoneInput.value ? "none" : "block";
+            });
+
+            // Check age on input
+            ageInput.addEventListener("input", () => {
+                const age = parseInt(ageInput.value);
+                if (isNaN(age) || age < 13) {
+                    ageError.style.display = "block";
+                    submitButton.disabled = true; // Disable submit until age is valid
                 } else {
-                    phoneError.style.display = "none";
+                    ageError.style.display = "none";
+                    submitButton.disabled = false;
                 }
             });
 
             emailInput.addEventListener("input", () => {
-                const value = emailInput.value.trim();
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-                    emailError.style.display = "block";
-                } else {
-                    emailError.style.display = "none";
-                }
+                const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                    emailInput.value,
+                );
+                emailError.style.display =
+                    valid || !emailInput.value ? "none" : "block";
             });
 
             document
                 .getElementById("support-checkbox")
                 .addEventListener("change", function () {
-                    document.getElementById("submit-button").disabled =
-                        !this.checked;
+                    submitButton.disabled = !this.checked;
                 });
 
             function showMessage(message, type = "success") {
-                const feedbackDiv = document.getElementById("feedback");
                 feedbackDiv.innerHTML = `<div class="message ${type}">${message}</div>`;
             }
 
             async function sendOTP() {
-                const phoneNumber = phoneInput.value.trim();
-
-                if (!/^\+91\d{10}$/.test(phoneNumber)) {
-                    showMessage(
-                        "Please enter a valid phone number starting with +91 followed by 10 digits.",
-                        "error",
-                    );
+                if (!iti.isValidNumber()) {
+                    phoneError.style.display = "block";
                     return;
                 }
+
+                const fullPhone = iti.getNumber();
 
                 try {
                     const response = await fetch("/send_otp/", {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ phno: phoneNumber }),
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ phno: fullPhone }),
                     });
 
                     const data = await response.json();
@@ -319,8 +333,8 @@
                             "error",
                         );
                     }
-                } catch (error) {
-                    showMessage("Error sending OTP: " + error.message, "error");
+                } catch (err) {
+                    showMessage("Error sending OTP: " + err.message, "error");
                 }
             }
 
@@ -329,8 +343,8 @@
                 const formData = {
                     name: form.querySelector('input[name="name"]').value,
                     age: form.querySelector('input[name="age"]').value,
-                    phno: phoneInput.value,
-                    email: emailInput.value,
+                    phno: iti.getNumber(),
+                    email: form.querySelector('input[name="email"]').value,
                     support: form.querySelector('input[name="support"]')
                         .checked,
                     otp: document.getElementById("otp").value,
@@ -347,9 +361,7 @@
                 try {
                     const response = await fetch("/verify/", {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
+                        headers: { "Content-Type": "application/json" },
                         body: JSON.stringify(formData),
                     });
 
@@ -357,19 +369,16 @@
                     if (data.status === "success") {
                         showMessage("Registration successful!", "success");
                         form.reset();
-                        document.getElementById("submit-button").disabled =
-                            true;
-                        phoneError.style.display = "none";
-                        emailError.style.display = "none";
+                        submitButton.disabled = true;
                     } else {
                         showMessage(
                             data.message || "Invalid OTP. Please try again.",
                             "error",
                         );
                     }
-                } catch (error) {
+                } catch (err) {
                     showMessage(
-                        "Error submitting form: " + error.message,
+                        "Error submitting form: " + err.message,
                         "error",
                     );
                 }
