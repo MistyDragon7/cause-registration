@@ -4,79 +4,250 @@
     <title>Register for the Cause</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
+
         form {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            width: 380px;
+            transition: transform 0.3s ease;
         }
-        input, label, button {
+
+        form:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2:after {
+            content: '';
             display: block;
+            width: 50px;
+            height: 3px;
+            background: #764ba2;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"] {
             width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="email"]:focus {
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+            outline: none;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 15px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: #764ba2;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:first-of-type {
+            background: #667eea;
+            color: white;
             margin-bottom: 15px;
         }
-        button {
-            background: #28a745;
+
+        button:last-of-type {
+            background: #764ba2;
             color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
         }
-        button:hover {
-            background: #218838;
+
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #otp {
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            margin-bottom: 0;
+        }
+
+        .input-group input:focus + .focus-border {
+            width: 100%;
+            transition: 0.4s;
+        }
+
+        .focus-border {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #764ba2;
+            transition: 0.4s;
+            transform: translateX(-50%);
+        }
+
+        @media (max-width: 480px) {
+            form {
+                width: 100%;
+                padding: 25px;
+            }
         }
     </style>
 </head>
+
 <body>
     <form id="registration-form">
-        <h2 style="text-align: center;">Support the Cause</h2>
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="number" name="age" placeholder="Age" required>
-        <input type="text" name="phno" placeholder="Phone Number (e.g. +1234567890)" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <label><input type="checkbox" name="support"> I support this cause</label>
+        <h2>Support the Cause</h2>
+        <div class="input-group">
+            <input type="text" name="name" placeholder="Name" required>
+            <span class="focus-border"></span>
+        </div>
+        <div class="input-group">
+            <input type="number" name="age" placeholder="Age" required>
+            <span class="focus-border"></span>
+        </div>
+        <div class="input-group">
+            <input type="text" name="phno" placeholder="Phone Number (e.g. +91xxxxxxxxxx)" required>
+            <span class="focus-border"></span>
+        </div>
+        <div class="input-group">
+            <input type="email" name="email" placeholder="Email" required>
+            <span class="focus-border"></span>
+        </div>
+        <label><input type="checkbox" name="support" id="support-checkbox"> I support this cause</label>
         <button type="button" onclick="sendOTP()">Send OTP</button>
-        <input type="text" id="otp" placeholder="Enter OTP">
-        <button type="button" onclick="submitForm()">Submit</button>
+        <div class="input-group">
+            <input type="text" id="otp" placeholder="Enter OTP">
+            <span class="focus-border"></span>
+        </div>
+        <button type="button" onclick="submitForm()" id="submit-button" disabled>Submit</button>
     </form>
 
+
     <script>
-        function sendOTP() {
-            const form = document.forms['registration-form'];
-            const phno = form.phno.value;
-            fetch('/send_otp/', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ phno })
-            }).then(res => res.json()).then(data => alert(data.status));
-        }
+    // Add checkbox event listener to enable/disable submit button
+    document.getElementById('support-checkbox').addEventListener('change', function() {
+        document.getElementById('submit-button').disabled = !this.checked;
+    });
 
-        function submitForm() {
-            const form = document.forms['registration-form'];
-            const data = {
-                name: form.name.value,
-                age: form.age.value,
-                phno: form.phno.value,
-                email: form.email.value,
-                support: form.support.checked,
-                otp: document.getElementById('otp').value
-            };
+    async function sendOTP() {
+        const phoneNumber = document.querySelector('input[name="phno"]').value;
 
-            fetch('/verify/', {
+        try {
+            const response = await fetch('/send_otp/', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(data)
-            }).then(res => res.json()).then(data => alert(data.status));
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    phno: phoneNumber
+                })
+            });
+
+            const data = await response.json();
+            if (data.status === "OTP sent") {
+                alert("OTP has been sent to your phone number!");
+            } else {
+                alert("Error sending OTP: " + data.message);
+            }
+        } catch (error) {
+            alert("Error sending OTP: " + error);
         }
-    </script>
+    }
+
+    async function submitForm() {
+        const form = document.getElementById('registration-form');
+        const formData = {
+            name: form.querySelector('input[name="name"]').value,
+            age: form.querySelector('input[name="age"]').value,
+            phno: form.querySelector('input[name="phno"]').value,
+            email: form.querySelector('input[name="email"]').value,
+            support: form.querySelector('input[name="support"]').checked,
+            otp: document.getElementById('otp').value
+        };
+
+        try {
+            const response = await fetch('/verify/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            if (data.status === "success") {
+                alert("Registration successful!");
+                form.reset();
+            } else {
+                alert("Invalid OTP. Please try again.");
+            }
+        } catch (error) {
+            alert("Error submitting form: " + error);
+        }
+    }
+</script>
+
 </body>
 </html>
