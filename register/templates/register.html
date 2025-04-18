@@ -1,253 +1,379 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <title>Register for the Cause</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
+    <head>
+        <title>Register for the Cause</title>
+        <style>
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                padding: 20px;
+            }
 
-        form {
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            width: 380px;
-            transition: transform 0.3s ease;
-        }
-
-        form:hover {
-            transform: translateY(-5px);
-        }
-
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 30px;
-            font-size: 28px;
-            text-align: center;
-            position: relative;
-        }
-
-        h2:after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 3px;
-            background: #764ba2;
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        input[type="email"] {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus,
-        input[type="email"]:focus {
-            border-color: #764ba2;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
-            outline: none;
-        }
-
-        label {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-            color: #2c3e50;
-            font-size: 15px;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        input[type="checkbox"] {
-            margin-right: 12px;
-            width: 18px;
-            height: 18px;
-            accent-color: #764ba2;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        button:first-of-type {
-            background: #667eea;
-            color: white;
-            margin-bottom: 15px;
-        }
-
-        button:last-of-type {
-            background: #764ba2;
-            color: white;
-        }
-
-        button:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        button:not(:disabled):hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        #otp {
-            margin-bottom: 20px;
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .input-group input {
-            margin-bottom: 0;
-        }
-
-        .input-group input:focus + .focus-border {
-            width: 100%;
-            transition: 0.4s;
-        }
-
-        .focus-border {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background-color: #764ba2;
-            transition: 0.4s;
-            transform: translateX(-50%);
-        }
-
-        @media (max-width: 480px) {
             form {
+                background: white;
+                padding: 35px;
+                border-radius: 20px;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                width: 380px;
+                transition: transform 0.3s ease;
+            }
+
+            form:hover {
+                transform: translateY(-5px);
+            }
+
+            h2 {
+                color: #2c3e50;
+                margin-bottom: 30px;
+                font-size: 28px;
+                text-align: center;
+                position: relative;
+            }
+
+            h2:after {
+                content: "";
+                display: block;
+                width: 50px;
+                height: 3px;
+                background: #764ba2;
+                margin: 10px auto 0;
+                border-radius: 2px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            input[type="email"] {
                 width: 100%;
-                padding: 25px;
+                padding: 14px;
+                margin-bottom: 5px;
+                border: 2px solid #e0e0e0;
+                border-radius: 10px;
+                font-size: 15px;
+                transition: all 0.3s ease;
+                box-sizing: border-box;
             }
-        }
-    </style>
-</head>
 
-<body>
-    <form id="registration-form">
-        <h2>Support the Cause</h2>
-        <div class="input-group">
-            <input type="text" name="name" placeholder="Name" required>
-            <span class="focus-border"></span>
-        </div>
-        <div class="input-group">
-            <input type="number" name="age" placeholder="Age" required>
-            <span class="focus-border"></span>
-        </div>
-        <div class="input-group">
-            <input type="text" name="phno" placeholder="Phone Number (e.g. +91xxxxxxxxxx)" required>
-            <span class="focus-border"></span>
-        </div>
-        <div class="input-group">
-            <input type="email" name="email" placeholder="Email" required>
-            <span class="focus-border"></span>
-        </div>
-        <label><input type="checkbox" name="support" id="support-checkbox"> I support this cause</label>
-        <button type="button" onclick="sendOTP()">Send OTP</button>
-        <div class="input-group">
-            <input type="text" id="otp" placeholder="Enter OTP">
-            <span class="focus-border"></span>
-        </div>
-        <button type="button" onclick="submitForm()" id="submit-button" disabled>Submit</button>
-    </form>
+            input[type="text"]:focus,
+            input[type="number"]:focus,
+            input[type="email"]:focus {
+                border-color: #764ba2;
+                box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+                outline: none;
+            }
 
+            .error-msg {
+                font-size: 13px;
+                color: #c0392b;
+                margin-bottom: 15px;
+                display: none;
+            }
 
-    <script>
-    // Add checkbox event listener to enable/disable submit button
-    document.getElementById('support-checkbox').addEventListener('change', function() {
-        document.getElementById('submit-button').disabled = !this.checked;
-    });
+            label {
+                display: flex;
+                align-items: center;
+                margin-bottom: 25px;
+                color: #2c3e50;
+                font-size: 15px;
+                cursor: pointer;
+                user-select: none;
+            }
 
-    async function sendOTP() {
-        const phoneNumber = document.querySelector('input[name="phno"]').value;
+            input[type="checkbox"] {
+                margin-right: 12px;
+                width: 18px;
+                height: 18px;
+                accent-color: #764ba2;
+            }
 
-        try {
-            const response = await fetch('/send_otp/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    phno: phoneNumber
-                })
+            button {
+                width: 100%;
+                padding: 14px;
+                border: none;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            button:first-of-type {
+                background: #667eea;
+                color: white;
+                margin-top: 10px;
+                margin-bottom: 15px;
+            }
+
+            button:last-of-type {
+                background: #764ba2;
+                color: white;
+            }
+
+            button:disabled {
+                background: #cccccc;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            button:not(:disabled):hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            #otp {
+                margin-bottom: 20px;
+            }
+
+            .input-group {
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .input-group input {
+                margin-bottom: 0;
+            }
+
+            .focus-border {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 2px;
+                background-color: #764ba2;
+                transition: 0.4s;
+                transform: translateX(-50%);
+            }
+
+            .input-group input:focus + .focus-border {
+                width: 100%;
+                transition: 0.4s;
+            }
+
+            @media (max-width: 480px) {
+                form {
+                    width: 100%;
+                    padding: 25px;
+                }
+            }
+
+            .message {
+                padding: 12px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-weight: 500;
+                font-size: 14px;
+                text-align: center;
+            }
+
+            .message.success {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .message.error {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form id="registration-form">
+            <h2>Support the Cause</h2>
+
+            <div class="input-group">
+                <input type="text" name="name" placeholder="Name" required />
+                <span class="focus-border"></span>
+            </div>
+
+            <div class="input-group">
+                <input type="number" name="age" placeholder="Age" required />
+                <span class="focus-border"></span>
+            </div>
+
+            <div class="input-group">
+                <input
+                    type="text"
+                    name="phno"
+                    id="phno"
+                    placeholder="Phone Number (e.g. +91xxxxxxxxxx)"
+                    required
+                />
+                <div id="phone-error" class="error-msg">
+                    Phone must start with +91 and have 10 digits.
+                </div>
+                <span class="focus-border"></span>
+            </div>
+
+            <div class="input-group">
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    required
+                />
+                <div id="email-error" class="error-msg">
+                    Please enter a valid email address.
+                </div>
+                <span class="focus-border"></span>
+            </div>
+
+            <label>
+                <input type="checkbox" name="support" id="support-checkbox" />
+                I support this cause
+            </label>
+
+            <div id="feedback"></div>
+
+            <button type="button" onclick="sendOTP()">Send OTP</button>
+
+            <div class="input-group">
+                <input type="text" id="otp" placeholder="Enter OTP" />
+                <span class="focus-border"></span>
+            </div>
+
+            <button
+                type="button"
+                onclick="submitForm()"
+                id="submit-button"
+                disabled
+            >
+                Submit
+            </button>
+        </form>
+
+        <script>
+            const phoneInput = document.getElementById("phno");
+            const emailInput = document.getElementById("email");
+            const phoneError = document.getElementById("phone-error");
+            const emailError = document.getElementById("email-error");
+
+            phoneInput.addEventListener("input", () => {
+                const value = phoneInput.value.trim();
+                if (!/^\+91\d{10}$/.test(value)) {
+                    phoneError.style.display = "block";
+                } else {
+                    phoneError.style.display = "none";
+                }
             });
 
-            const data = await response.json();
-            if (data.status === "OTP sent") {
-                alert("OTP has been sent to your phone number!");
-            } else {
-                alert("Error sending OTP: " + data.message);
-            }
-        } catch (error) {
-            alert("Error sending OTP: " + error);
-        }
-    }
-
-    async function submitForm() {
-        const form = document.getElementById('registration-form');
-        const formData = {
-            name: form.querySelector('input[name="name"]').value,
-            age: form.querySelector('input[name="age"]').value,
-            phno: form.querySelector('input[name="phno"]').value,
-            email: form.querySelector('input[name="email"]').value,
-            support: form.querySelector('input[name="support"]').checked,
-            otp: document.getElementById('otp').value
-        };
-
-        try {
-            const response = await fetch('/verify/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
+            emailInput.addEventListener("input", () => {
+                const value = emailInput.value.trim();
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    emailError.style.display = "block";
+                } else {
+                    emailError.style.display = "none";
+                }
             });
 
-            const data = await response.json();
-            if (data.status === "success") {
-                alert("Registration successful!");
-                form.reset();
-            } else {
-                alert("Invalid OTP. Please try again.");
-            }
-        } catch (error) {
-            alert("Error submitting form: " + error);
-        }
-    }
-</script>
+            document
+                .getElementById("support-checkbox")
+                .addEventListener("change", function () {
+                    document.getElementById("submit-button").disabled =
+                        !this.checked;
+                });
 
-</body>
+            function showMessage(message, type = "success") {
+                const feedbackDiv = document.getElementById("feedback");
+                feedbackDiv.innerHTML = `<div class="message ${type}">${message}</div>`;
+            }
+
+            async function sendOTP() {
+                const phoneNumber = phoneInput.value.trim();
+
+                if (!/^\+91\d{10}$/.test(phoneNumber)) {
+                    showMessage(
+                        "Please enter a valid phone number starting with +91 followed by 10 digits.",
+                        "error",
+                    );
+                    return;
+                }
+
+                try {
+                    const response = await fetch("/send_otp/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ phno: phoneNumber }),
+                    });
+
+                    const data = await response.json();
+                    if (data.status === "OTP sent") {
+                        showMessage(
+                            "OTP has been sent to your phone number.",
+                            "success",
+                        );
+                    } else {
+                        showMessage(
+                            data.message || "Error sending OTP.",
+                            "error",
+                        );
+                    }
+                } catch (error) {
+                    showMessage("Error sending OTP: " + error.message, "error");
+                }
+            }
+
+            async function submitForm() {
+                const form = document.getElementById("registration-form");
+                const formData = {
+                    name: form.querySelector('input[name="name"]').value,
+                    age: form.querySelector('input[name="age"]').value,
+                    phno: phoneInput.value,
+                    email: emailInput.value,
+                    support: form.querySelector('input[name="support"]')
+                        .checked,
+                    otp: document.getElementById("otp").value,
+                };
+
+                if (!formData.otp) {
+                    showMessage(
+                        "Please enter the OTP before submitting.",
+                        "error",
+                    );
+                    return;
+                }
+
+                try {
+                    const response = await fetch("/verify/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(formData),
+                    });
+
+                    const data = await response.json();
+                    if (data.status === "success") {
+                        showMessage("Registration successful!", "success");
+                        form.reset();
+                        document.getElementById("submit-button").disabled =
+                            true;
+                        phoneError.style.display = "none";
+                        emailError.style.display = "none";
+                    } else {
+                        showMessage(
+                            data.message || "Invalid OTP. Please try again.",
+                            "error",
+                        );
+                    }
+                } catch (error) {
+                    showMessage(
+                        "Error submitting form: " + error.message,
+                        "error",
+                    );
+                }
+            }
+        </script>
+    </body>
 </html>
